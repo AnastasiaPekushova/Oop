@@ -32,18 +32,17 @@ class Student:
 
     def __eq__(self, other):
         if not isinstance(other,Student):
-            print("Невозможно сравнить!")
-            return
+            return NotImplemented
         return self.rate_hw_aver() == other.rate_hw_aver()
 
     def __gt__(self, other):
         if not isinstance(other, Student):
-            print("Невозможно сравнить!")
+            return NotImplemented
         return self.rate_hw_aver() > other.rate_hw_aver()
 
     def __lt__(self, other):
         if not isinstance(other, Student):
-            print("Невозможно сравнить!")
+            return NotImplemented
         return self.rate_hw_aver() < other.rate_hw_aver()
 
     def __str__(self):
@@ -56,15 +55,6 @@ class Mentor:
         self.name = name
         self.surname = surname
         self.courses_attached = []
-
-    def rate_hw(self, student, course, grade):
-        if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
-            if course in student.grades:
-                student.grades[course] += [grade]
-            else:
-                student.grades[course] = [grade]
-        else:
-            return "Ошибка"
 
 
 class Lecturer(Mentor):
@@ -88,17 +78,17 @@ class Lecturer(Mentor):
 
     def __eq__(self, other):
         if not isinstance(other,Lecturer):
-            print("Невозможно сравнить!")
+            return NotImplemented
         return self.add_rate() == other.add_rate()
 
     def __gt__(self, other):
         if not isinstance(other, Lecturer):
-            print("Невозможно сравнить!")
+            return NotImplemented
         return self.add_rate() > other.add_rate()
 
     def __lt__(self, other):
         if not isinstance(other, Lecturer):
-            print("Невозможно сравнить!")
+            return NotImplemented
         return self.add_rate() < other.add_rate()
 
     def __str__(self):
@@ -110,7 +100,6 @@ class Reviewer(Mentor):
 
     def __init__(self, name, surname):
         super().__init__(name, surname)
-
 
     def rate_hw(self, student, course, grade):
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
@@ -178,9 +167,9 @@ def grade_stud_all(students_list, course):
             stud_score += all_stud_grade
             quantity_stud += 1
     if all_stud_grade == 0:
-        return f"Оценок по этому предмету нет"
+        return 0
     else:
-        return f"{round(all_stud_grade / quantity_stud, 1)}"
+        return round(all_stud_grade / quantity_stud, 1)
 
 def grades_lecturers(lecturer_list, course):
     average_rating = 0
@@ -194,9 +183,9 @@ def grades_lecturers(lecturer_list, course):
             average_rating += overall_lecturer_average_rates
             lec += 1
     if average_rating == 0:
-        return f"Оценок по этому предмету нет"
+        return 0
     else:
-        return f"{round(average_rating / lec, 1)}"
+        return round(average_rating / lec, 1)
 
 
 if student1 < student2:
